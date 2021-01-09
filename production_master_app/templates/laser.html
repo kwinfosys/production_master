@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main_content %}
+<main class="content">
+    <div class="container-fluid p-0">
+
+        <h1 class="h3 mb-3">Laser Production</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Production Details</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <form action="/add_production" method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="employee_no">Employee No</label>
+                                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" class="form-control" id="employee_no"
+                                        placeholder="Insert employee number" name="employee_no" required autofocus>
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="shift_code">Shift Code</label>
+                                    <select id="shift_code" class="form-control" name="shift_code" required>
+                                        <option selected>Choose...</option>
+                                        {%for shift in shifts%}
+                                        <option value="{{shift.main_id}}">{{shift.shift_code}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="machine_number">Machine Number</label>
+                                    <select id="machine_number" class="form-control" name="machine_number" required>
+                                        <option selected>Choose...</option>
+                                        {%for machine in machines%}
+                                        <option value="{{machine.main_id}}">{{machine.machine_number}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="component_type">Component Type</label>
+                                    <select id="component_type" class="form-control" name="component_type" required>
+                                        <option selected>Choose...</option>
+                                        {%for component in components%}
+                                        <option value="{{component.main_id}}">{{component.component_type}}
+                                        </option>
+                                        {%endfor%}
+
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="lot_number">Component Lot Number</label>
+                                    <input type="text" class="form-control" id="lot_number"
+                                        placeholder="Insert lot number" name="lot_number" required>
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="quantity">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" placeholder="Insert quantity"
+                                        name="quantity" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="row mt-3">
+                                {% if messages %}
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == 'success' %}
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="btn-close" data-dismiss="alert"
+                                            aria-label="Close"></button>
+                                        <div class="alert-icon">
+                                            <span data-feather="bell"></span>
+                                        </div>
+                                        <div class="alert-message">
+                                            <strong>Success !</strong> {{ message }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Today's Production</h5>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <!-- <th>LK Number</th> -->
+                        <th>Lot Number</th>
+                        <th>Quantity</th>
+                        <th class="d-none d-md-table-cell">Created at</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{product.component_id}}</td>
+                        <td>{{product.component_lot_number}}</td>
+                        <td>{{product.component_quantity}}</td>
+                        <td class="d-none d-md-table-cell">{{product.created_at}}</td>
+                        <td class="table-action">
+                            <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                            <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock main_content %}

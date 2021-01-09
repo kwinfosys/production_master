@@ -1,0 +1,54 @@
+{% load static %}
+<nav id="sidebar" class="sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="{% url 'home' %}">
+            <span class="align-middle">Production Master</span>
+        </a>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-header">
+                Settings
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{% url 'component' %}">
+                    <i class="align-middle" data-feather="play"></i> <span class="align-middle">Add
+                        Components</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{% url 'shift' %}">
+                    <i class="align-middle" data-feather="play"></i> <span class="align-middle">Add
+                        Shifts</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{% url 'operation' %}">
+                    <i class="align-middle" data-feather="play"></i> <span class="align-middle">Add
+                        Operations</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{% url 'machine' %}">
+                    <i class="align-middle" data-feather="play"></i> <span class="align-middle">Add
+                        Machines</span>
+                </a>
+            </li>
+
+
+            <li class="sidebar-header">
+                Operations
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" href="{% url 'laser' %}">
+                    <i class="align-middle" data-feather="play"></i> <span class="align-middle">Laser
+                        Production</span>
+                </a>
+            </li>
+
+        </ul>
+
+
+    </div>
+</nav>

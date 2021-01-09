@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main_content %}
+<main class="content">
+    <div class="container-fluid p-0">
+
+        <h1 class="h3 mb-3">Laser Production</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Add Operations</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <form action="/add_operation" method="POST">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="operation_name">Operation Name</label>
+                                    <input type="text" class="form-control" id="operation_name"
+                                        placeholder="Insert Operation Name" name="operation_name" required>
+                                </div>
+                                
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="row mt-3">
+                                {% if messages %}
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == 'success' %}
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="btn-close" data-dismiss="alert"
+                                            aria-label="Close"></button>
+                                        <div class="alert-icon">
+                                            <span data-feather="bell"></span>
+                                        </div>
+                                        <div class="alert-message">
+                                            <strong>Success !</strong> {{ message }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Operation Details</h5>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Operation Name</th>
+                        <!-- <th>LK Number</th> -->
+                        <th class="d-none d-md-table-cell">Created at</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for operation in operations %}
+                    <tr>
+                        <td>{{operation.operation_name}}</td>
+                        <td class="d-none d-md-table-cell">{{operation.created_at}}</td>
+                        <td class="table-action">
+                            <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                            <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock main_content %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main_content %}
+<main class="content">
+    <div class="container-fluid p-0">
+
+        <h1 class="h3 mb-3">Laser Production</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Shift Details</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <form action="/add_shift" method="POST">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="shift_code">Shift Code</label>
+                                    <input type="text" class="form-control" id="shift_code"
+                                        placeholder="Insert Shift Code" name="shift_code" required>
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="shift_name">Shift Description</label>
+                                    <input type="text" class="form-control" id="shift_name"
+                                        placeholder="Insert shift description" name="shift_name" required>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="row mt-3">
+                                {% if messages %}
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == 'success' %}
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="btn-close" data-dismiss="alert"
+                                            aria-label="Close"></button>
+                                        <div class="alert-icon">
+                                            <span data-feather="bell"></span>
+                                        </div>
+                                        <div class="alert-message">
+                                            <strong>Success !</strong> {{ message }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Shift Codes</h5>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Shift Code</th>
+                        <!-- <th>LK Number</th> -->
+                        <th>Shift Description</th>
+                        <th class="d-none d-md-table-cell">Created at</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for shift in shifts %}
+                    <tr>
+                        <td>{{shift.shift_code}}</td>
+                        <td>{{shift.shift_name}}</td>
+                        <td class="d-none d-md-table-cell">{{shift.created_at}}</td>
+                        <td class="table-action">
+                            <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                            <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock main_content %}

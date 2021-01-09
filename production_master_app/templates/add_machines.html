@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main_content %}
+<main class="content">
+    <div class="container-fluid p-0">
+
+        <h1 class="h3 mb-3">Laser Production</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Machine Details</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <form action="/add_machine" method="POST">
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="machine_number">Machine Number</label>
+                                    <input type="text" class="form-control" id="machine_number"
+                                        placeholder="Insert Machine Number" name="machine_number" required>
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="machine_description">Machine Description</label>
+                                    <input type="text" class="form-control" id="machine_description"
+                                        placeholder="Insert Machine Description" name="machine_description" required>
+                                </div>
+                                <div class="mb-3 col-md-4">
+                                    <label class="form-label" for="operation">Operation</label>
+                                    <select id="operation" class="form-control" name="operation_id" required>
+                                        <option selected>Choose...</option>
+                                        {%for operation in operations%}
+                                        <option value="{{operation.main_id}}">{{operation.operation_name}}
+                                        </option>
+                                        {%endfor%}
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="row mt-3">
+                                {% if messages %}
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == 'success' %}
+                                    <div class="alert alert-success alert-dismissible" role="alert">
+                                        <button type="button" class="btn-close" data-dismiss="alert"
+                                            aria-label="Close"></button>
+                                        <div class="alert-icon">
+                                            <span data-feather="bell"></span>
+                                        </div>
+                                        <div class="alert-message">
+                                            <strong>Success !</strong> {{ message }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Machine Details</h5>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Machine Number</th>
+                        <!-- <th>LK Number</th> -->
+                        <th>Operation</th>
+                        <th class="d-none d-md-table-cell">Created at</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for machine in machines %}
+                    <tr>
+                        <td>{{machine.machine_number}}</td>
+                        <td>{{machine.operation_id}}</td>
+                        <td class="d-none d-md-table-cell">{{machine.created_at}}</td>
+                        <td class="table-action">
+                            <a href="#"><i class="align-middle" data-feather="edit-2"></i></a>
+                            <a href="#"><i class="align-middle" data-feather="trash"></i></a>
+                        </td>
+                    </tr>
+                    {%endfor%}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock main_content %}
